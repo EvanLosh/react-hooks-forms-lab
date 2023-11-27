@@ -7,20 +7,22 @@ import { v4 as uuid } from "uuid";
 
 function ShoppingList({ items }) {
 
-  // const itemList = items;
-  const [itemName, setitemName] = useState('')
-  const [itemCategory, setitemCategory] = useState('Produce')
-  const [itemList, updateItemList] = useState(items)
+  // states and handlers for ItemForm compnent
+  // const [itemName, setitemName] = useState('')
+  // const [itemCategory, setitemCategory] = useState('Produce')
+
+  // function onItemFormChange(event) {
+  //   setitemName(event.target.value)
+  // }
+
+  // function onItemCategoryChange(event) {
+  //   setitemCategory(event.target.value)
+  // }
+
+  // states and handlers for Filter compnent
+  const [itemList, setItemList] = useState(items)
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [filterString, setFilterString] = useState("");
-
-  function onItemFormChange(event) {
-    setitemName(event.target.value)
-  }
-
-  function onItemCategoryChange(event) {
-    setitemCategory(event.target.value)
-  }
 
   function onFilterCategoryChange(event) {
     setSelectedCategory(event.target.value);
@@ -30,19 +32,14 @@ function ShoppingList({ items }) {
     setFilterString(event.target.value);
   }
 
-  function onItemFormSubmit(e) {
-    e.preventDefault();
-
-    updateItemList((itemList) => {
-      return [...itemList, {
-        id: uuid(),
-        name: itemName,
-        category: itemCategory
-      }]
-    })
-   
+  function onItemFormSubmit(itemToAdd) {
+    setItemList((itemList) => {
+      return [...itemList, itemToAdd]
+    }
+    )
   }
 
+  // create an array of JSX 
   const itemsToDisplay = itemList.filter((item) => {
     if (selectedCategory === "All") return true;
     return item.category === selectedCategory;
@@ -54,10 +51,7 @@ function ShoppingList({ items }) {
   return (
     <div className="ShoppingList">
       <ItemForm
-        itemName={itemName}
         onItemFormSubmit={onItemFormSubmit}
-        onItemFormChange={onItemFormChange}
-        onItemCategoryChange={onItemCategoryChange}
       />
       <Filter
         search={filterString}
