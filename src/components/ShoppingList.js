@@ -40,7 +40,7 @@ function ShoppingList({ items }) {
         category: itemCategory
       }]
     })
-    console.log(itemList)
+   
   }
 
   const itemsToDisplay = itemList.filter((item) => {
@@ -48,17 +48,19 @@ function ShoppingList({ items }) {
     return item.category === selectedCategory;
   })
     .filter((item) => {
-      return item.name.includes(filterString);
+      return (item.name.includes(filterString));
     });
 
   return (
     <div className="ShoppingList">
       <ItemForm
+        itemName={itemName}
         onItemFormSubmit={onItemFormSubmit}
         onItemFormChange={onItemFormChange}
         onItemCategoryChange={onItemCategoryChange}
       />
       <Filter
+        search={filterString}
         onFilterCategoryChange={onFilterCategoryChange}
         onSearchChange={onSearchChange}
       />
